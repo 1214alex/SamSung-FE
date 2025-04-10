@@ -1,0 +1,7 @@
+{
+    "blockedUsers": [
+      { "id": 1, "name": "Jessica" },
+      { "id": 2, "name": "Dorothy" }
+    ]
+  }
+  
