@@ -73,6 +73,14 @@ spring:
           filters:
             - RewritePath=/user-data-food/(?<segment>.*), /${segment}
             - AuthorizationHeaderFilter
+
+        - id: email-verification
+          uri: lb://DIEAT-USER-SERVICE
+          predicates:
+            - Path=/user-service/email-verification/**
+            - Method=POST
+          filters:
+            - RewritePath=/user-service/(?<segment>.*), /${segment}
       globalcors:
         corsConfigurations:
           '[/**]':

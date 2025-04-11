@@ -24,6 +24,13 @@ public class JwtFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+        String uri = request.getRequestURI();
+
+        // 인증 필요 없는 경로는 바로 통과
+        if (uri.startsWith("/email-verification")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
         String authorizationHeader = request.getHeader("Authorization");
         log.info("토큰 확인: {}" + authorizationHeader);
 

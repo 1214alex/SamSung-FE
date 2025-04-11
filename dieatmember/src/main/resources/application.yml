@@ -5,8 +5,8 @@ spring:
   mail:
     host: smtp.naver.com
     port: 587
-    username:
-    password:
+    username: 1214alex
+    password: Tjdwns0417@
     properties:
       mail:
         smtp:
@@ -17,7 +17,7 @@ spring:
   data:
     redis:
       host: localhost
-      port: 6380
+      port: 6379
 
   application:
     name: dieat-user-service
@@ -25,7 +25,7 @@ spring:
   ## db config
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:mariadb://localhost:3306/samsung
+    url: jdbc:mariadb://localhost:3307/samsung
     username: root
     password: mariadb
 

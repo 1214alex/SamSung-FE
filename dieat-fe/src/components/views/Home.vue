@@ -1,6 +1,5 @@
 <template>
     <div>
-      <Header></Header>
       <main class="main">
         <div class="image-wrapper">
           <img
@@ -19,7 +18,6 @@
 </template>
   
 <script setup>
-  import Header from '@/components/common/Header.vue';
 </script>
   
 <style scoped>

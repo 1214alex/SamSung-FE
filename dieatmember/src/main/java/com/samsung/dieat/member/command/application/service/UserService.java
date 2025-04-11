@@ -11,5 +11,5 @@ public interface UserService extends UserDetailsService {
 
     UserDTO getUserById(String memNo);
 
-    void registUserWeight(RequestWeightVO newUser);
+    UserDTO getUserByUserId(String userId);
 }

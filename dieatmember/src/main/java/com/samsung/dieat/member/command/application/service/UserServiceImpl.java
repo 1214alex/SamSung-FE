@@ -46,10 +46,7 @@ public class UserServiceImpl implements UserService {
 
         userRepository.save(registUser);
     }
-    @Override
-    public void registUserWeight(RequestWeightVO newUser) {
-        
-    }
+
 
 
 
@@ -85,5 +82,14 @@ public class UserServiceImpl implements UserService {
                 loginUser.getUserCode(),
                 grantedAuthorities
         );
+    }
+
+    @Override
+    public UserDTO getUserByUserId(String userId) {
+        UserEntity user = userRepository.findByUserId(userId);
+        if (user == null) {
+            throw new UsernameNotFoundException("유저를 찾을 수 없습니다: " + userId);
+        }
+        return modelMapper.map(user, UserDTO.class);
     }
 }

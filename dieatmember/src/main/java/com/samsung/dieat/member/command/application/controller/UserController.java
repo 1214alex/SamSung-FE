@@ -1,7 +1,7 @@
 package com.samsung.dieat.member.command.application.controller;
 
+
 import com.samsung.dieat.member.command.application.dto.UserDTO;
-import com.samsung.dieat.member.command.application.dto.UserWeightDTO;
 import com.samsung.dieat.member.command.application.service.EmailVerificationService;
 import com.samsung.dieat.member.command.application.service.UserService;
 import com.samsung.dieat.member.command.domain.aggregate.vo.*;
@@ -12,7 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
@@ -92,13 +94,22 @@ public class UserController {
                 .body(findUserVO);
     }
 
-    @PostMapping("users/weight")
-    public ResponseEntity<ResponseWeightVO> weight(@RequestBody RequestWeightVO newUser) {
-        UserWeightDTO userWeightDTO = modelMapper.map(newUser, UserWeightDTO.class);
-        userService.registUserWeight(newUser);
+    @GetMapping("/users/me")
+    public ResponseEntity<ResponseFindUserVO> getMyInfo() {
+        // 현재 인증된 사용자 정보 추출
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String userId = authentication.getName();
 
-        ResponseWeightVO responseWeightVO = modelMapper.map(userWeightDTO, ResponseWeightVO.class);
+        // userId로 유저 조회
+        UserDTO userDTO = userService.getUserByUserId(userId);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(responseWeightVO);
+        // VO로 변환 후 응답
+        ResponseFindUserVO response = modelMapper.map(userDTO, ResponseFindUserVO.class);
+        return ResponseEntity.ok(response);
     }
+
+
+
+
+
 }
