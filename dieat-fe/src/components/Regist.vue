@@ -60,7 +60,7 @@
             <option disabled>월</option>
             <option v-for="month in 12" :key="month" :value="month">{{ month }}</option>
           </select>
-          <select v-model="form.birthDay" class="form-select">
+          <select v-model="form.birthDay" class="form-select">    <!-- 프론트 fetch를 통해 year,month,day를 문자열로 합쳐서 백으로 전송-->
             <option disabled>일</option>
             <option v-for="day in 31" :key="day" :value="day">{{ day }}</option>
           </select>

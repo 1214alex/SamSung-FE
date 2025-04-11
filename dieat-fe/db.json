@@ -1,13 +1,35 @@
 {
-    "blockedUsers": [
-      { "id": 1, "name": "Jessica" },
-      { "id": 2, "name": "Dorothy" }
-    ],
-    "subscribers": [
-    { "id": 1, "name": "Samsung" },
-    { "id": 2, "name": "Rosie" },
-    { "id": 3, "name": "lemon"},
-    { "id": 4, "name": "Jakego"},
-    { "id": 5, "name": "MK"}
-    ]
-  }
+  "blockedUsers": [
+    { 
+      "id": 1, 
+      "name": "Jessica" 
+    }
+    ,
+    {
+      "id": "2",
+      "name": "Dorothy"
+    }
+  ],
+  "subscribers": [
+    {
+      "id": "1",
+      "name": "Samsung"
+    },
+    {
+      "id": "2",
+      "name": "Rosie"
+    },
+    {
+      "id": "3",
+      "name": "lemon"
+    },
+    {
+      "id": "4",
+      "name": "Jakego"
+    },
+    {
+      "id": "5",
+      "name": "MK"
+    }
+  ]
+}

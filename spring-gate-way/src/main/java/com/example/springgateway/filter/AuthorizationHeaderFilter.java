@@ -87,6 +87,8 @@ public class AuthorizationHeaderFilter
 
         ServerHttpResponse response = exchange.getResponse();
         response.setStatusCode(httpStatus);
+
+
         log.info("에러 메세지: " + errorMessage);
 
         return response.setComplete();

@@ -73,6 +73,13 @@ spring:
           filters:
             - RewritePath=/user-data-food/(?<segment>.*), /${segment}
             - AuthorizationHeaderFilter
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "http://localhost:5173"
+            allowedMethods: "*"
+            allowedHeaders: "*"
+            allowCredentials: true
 
 token:
   expiration_time: 43200000

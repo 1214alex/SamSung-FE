@@ -20,11 +20,12 @@
   
   onMounted(async () => {
     try {
-      const res = await fetch('http://localhost:8080/subscribers') // public/SubscribeDB.json
+      const res = await fetch('http://localhost:8080/subscribers')
       if (!res.ok) throw new Error('구독자 목록을 불러오지 못했습니다')
       subscribers.value = await res.json()
     } catch (err) {
       console.error('에러:', err)
+      
     }
   })
   

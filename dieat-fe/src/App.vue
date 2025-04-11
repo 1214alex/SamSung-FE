@@ -1,48 +1,66 @@
 <template>
   <div>
-    <button class="login-btn" @click="isLoginModalOpen = true">로그인</button>
-    <RouterLink to="/register">회원가입</RouterLink>
-    <RouterLink to="/subscribeList">구독리스트</RouterLink>
-    <RouterLink to="/blockList">차단리스트</RouterLink>
-    <main>
-      <RouterView />
-    </main>
-    <LoginModal :show="isLoginModalOpen" @login="handleLogin" @close="isLoginModalOpen = false" />
+    <!-- 헤더에서 로그인 버튼 누르면 모달 열기 -->
+    <TheHeader
+      :user="user"
+      @open-login="isLoginModalOpen = true"
+      @logout="handleLogout"
+    />
+
+    <!-- 메인 화면 -->
+    <RouterView />
+
+    <!-- 로그인 모달 -->
+    <LoginModal
+      :show="isLoginModalOpen"
+      @close="isLoginModalOpen = false"
+      @login-success="handleLoginSuccess"
+    />
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import { RouterView, RouterLink } from 'vue-router'
+import { ref, onMounted } from 'vue'
+import { RouterView } from 'vue-router'
+import TheHeader from '@/components/common/Header.vue'
 import LoginModal from '@/components/LoginModal.vue'
 
 const isLoginModalOpen = ref(false)
+const user = ref(null)
 
-const handleLogin = ({ id, password }) => {
-  console.log('로그인 시도:', id, password)
-  isLoginModalOpen.value = false
+const handleLoginSuccess = async () => {
+  try {
+    const token = localStorage.getItem('accessToken')
+    const res = await fetch('http://localhost:8000/user-service/users/me', {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+    if (!res.ok) throw new Error('인증 실패')
+    user.value = await res.json()
+    isLoginModalOpen.value = false
+  } catch (err) {
+    console.error('로그인 후 유저 정보 불러오기 실패:', err)
+    localStorage.removeItem('accessToken')
+    user.value = null
+  }
 }
+
+const handleLogout = () => {
+  localStorage.removeItem('accessToken')
+  user.value = null
+}
+
+onMounted(() => {
+  const token = localStorage.getItem('accessToken')
+  if (token) handleLoginSuccess()
+})
 </script>
 
-<style scoped>
-.login-btn {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  background-color: #11875c;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  padding: 10px 16px;
-  font-size: 14px;
-  cursor: pointer;
-  z-index: 1100;
-}
-
-body {
+<style>
+html, body, #app {
   margin: 0;
   padding: 0;
-  font-family: 'Helvetica', 'Arial', sans-serif;
-  background-color: #f9f9f9;
+  box-sizing: border-box;
 }
 </style>
